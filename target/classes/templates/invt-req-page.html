@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <style>
+body, html {
+  height: 100%;
+  margin: 0;
+  background-image: url('/bg-image.jpg');
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+table,th, td {
+   border: 2px solid black;
+  }
+  table.table-bordered{
+    border:2px solid #4682B4;;
+    margin-top:20px;
+  }
+table.table-bordered > thead > tr > th{
+    border:2px solid #4682B4;;
+}
+table.table-bordered > tbody > tr > td{
+    border:2px solid #4682B4;;
+}
+</style>
+    <meta charset="UTF-8">
+    <title>Inventory Request Page</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+
+<div class="container text-center">
+    <div>
+        <h1>Inventory Request Page</h1>
+        <form th:action="@{/logout}" method="post">
+        <a th:href="@{/invt-request/profile}" class="btn btn-primary " role="button" aria-pressed="true">Profile</a>
+        <a th:href="@{/invt-request/history}" class="btn btn-primary " role="button" aria-pressed="true">History</a>
+        <a th:href="@{/invt-request/cart}" class="btn btn-primary " role="button" aria-pressed="true"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a>
+
+            <input type="submit" class="btn btn-primary" value="Logout">
+        </form>
+
+        <p>
+        <h4> Welcome <b>[[${#request.userPrincipal.principal.name}]]</b></h4>
+        </p>
+        <!--<td><a th:href="@{/logout}"><h4>Logout</h4></a></td>-->
+    </div>
+</div>
+<div class="container text-center">
+    <div>
+        <h1>Request Inventories</h1>
+    </div>
+    <div>
+        <div th:if="${message!=null}" class="alert alert-success text-center">
+            [[${message}]]
+        </div>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th style="text-align: center">Name</th>
+                <th style="text-align: center">Type</th>
+                <th style="text-align: center">Available</th>
+                <th style="text-align: center">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="inventory: ${inventoryList}">
+                <td th:text="${inventory.name}" >Name</td>
+                <td th:text="${inventory.type}">Type</td>
+                <td th:text="${inventory.count>0 ? 'Yes' : 'No'}" />
+                <td>
+                    <a th:href="@{'/invt-request/add/' + ${inventory.id}}" class="btn btn-primary " role="button" aria-pressed="true"> Add To Cart</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

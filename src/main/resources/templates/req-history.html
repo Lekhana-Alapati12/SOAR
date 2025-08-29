@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <style>
+body, html {
+  height: 100%;
+  margin: 0;
+  background-image: url('/bg-image.jpg');
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+table,th, td {
+   border: 2px solid black;
+  }
+  table.table-bordered{
+    border:2px solid #4682B4;;
+    margin-top:20px;
+  }
+table.table-bordered > thead > tr > th{
+    border:2px solid #4682B4;;
+}
+table.table-bordered > tbody > tr > td{
+    border:2px solid #4682B4;;
+}
+</style>
+    <meta charset="UTF-8">
+    <title>Inventory History Page</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+
+<div class="container text-center">
+    <div>
+        <h1>Request History Page</h1>
+        <!--<td><a th:href="@{/logout}"><h4>Logout</h4></a></td>-->
+    </div>
+</div>
+<div class="container text-center">
+    <form th:action="@{/logout}" method="post">
+                <input type="submit" class="btn btn-primary" value="Logout"> &nbsp
+        <a th:href="@{/invt-request}" class="btn btn-primary " role="button" aria-pressed="true">Back</a>
+    </form>
+
+</div>
+<br>
+<div class="container text-center">
+    <div>
+        <div th:if="${message!=null}" class="alert alert-success text-center">
+            [[${message}]]
+        </div>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+            <tr>
+                <th style="text-align: center">Requested Date</th>
+                <th style="text-align: center">Items Requested</th>
+                <th style="text-align: center">Remarks By Developer</th>
+                <th style="text-align: center">Status</th>
+                <th style="text-align: center">Remarks By Manager</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="itemsList: ${itemsList}">
+                <td th:text="${itemsList.date}" >Date</td>
+                <td>
+                    <div style = "position:relative; right:20px">
+                    <ol>
+
+                        <li th:each="list: ${itemsList.cardItems}">
+
+                                <b>Name :</b>
+                                [[${list.inventory.name}]]
+                                <br>
+                                 <b>Type :</b>
+                                 [[${list.inventory.type}]]
+                               <!-- <td th:text="${list.inventory.type}">Type</td>-->
+
+                        </li>
+                    </ol>
+                    </div>
+                </td>
+                <td th:text="${itemsList.remarks_dev}">Remarks By Developer</td>
+                <td th:text="${itemsList.status}">status</td>
+                <td th:text="${itemsList.remarks_manager}">Remaks By Manager</td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>

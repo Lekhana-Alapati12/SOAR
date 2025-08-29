@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Inventory Approval Page</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+.dropbtn {
+  background-color: #4682B4;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn {background-color: #4682B4;}
+body, html {
+  height: 100%;
+  margin: 0;
+  background-image: url('/bg-image.jpg');
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+table,th, td {
+   border: 2px solid black;
+  }
+  table.table-bordered{
+    border:2px solid #4682B4;;
+    margin-top:20px;
+  }
+table.table-bordered > thead > tr > th{
+    border:2px solid #4682B4;;
+}
+table.table-bordered > tbody > tr > td{
+    border:2px solid #4682B4;;
+}
+</style>
+</head>
+<body>
+
+<div class="container text-center">
+    <div>
+        <h1>Request Approval Page</h1>
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" class="btn btn-primary" value="Logout"> &nbsp
+        <a th:href="@{/req-approval/profile}" class="btn btn-primary " role="button" aria-pressed="true">Profile</a> &nbsp
+        <a th:href="@{/req-approval/history}" class="btn btn-primary " role="button" aria-pressed="true">History</a>
+            <div class="dropdown" style="float:right;">
+                <button class="dropbtn">Sort</button>
+                <div class="dropdown-content">
+                    <a th:href="@{/req-approval/sort/date}">Date</a>
+                    <a th:href="@{/req-approval/sort/cost}">Cost</a>
+                    <a th:href="@{/req-approval/sort/count}">Count</a>
+                </div>
+            </div>
+        </form>
+
+        <p>
+        <h4> Welcome <b>[[${#request.userPrincipal.principal.name}]]</b></h4>
+        </p>
+    </div>
+</div>
+<div class="container text-center">
+    <div>
+        <div th:if="${message!=null}" class="alert alert-success text-center">
+            [[${message}]]
+        </div>
+        <table class="table table-bordered" style="width:100%">
+            <thead class="thead-dark">
+            <tr>
+                <th style="text-align: center">Developer Details</th>
+                <th style="text-align: center">Date</th>
+                <th style="text-align: center ">Items Requested</th>
+                <th style="text-align: center">Remarks Entered By Developer</th>
+                <th style="text-align: center">Total Items</th>
+                <th style="text-align: center">Total Cost</th>
+                <th style="text-align: center">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="l: ${totalList}">
+                <td style="width:20%">
+                    <div style = "position:relative; right:10px">
+                            <b>Id : </b>
+                            <span th:text="${l.user.id}"></span>
+                            <br>
+                            <b>Name : </b>
+                            <span th:text="${l.user.username}"></span>
+                    </div>
+                </td>
+                <td th:text="${l.date}">Type</td>
+                <td style="width:20%">
+                    <div style = "position:relative; right:20px">
+                    <ol>
+                        <li th:each="items: ${l.cardItems}" >
+
+                                    <b>Name :</b>
+                                    [[${items.inventory.name}]]
+                                    <br>
+                                    <b>Type :</b>
+                                    [[${items.inventory.type}]]
+                                    <!-- <td th:text="${list.inventory.type}">Type</td>-->
+                                    <br>
+                                    <b>Cost :</b>
+                                    [[${items.inventory.cost}]]
+                                    <br>
+                                    <!-- <td th:text="${list.inventory.type}">Type</td>-->
+                        </li>
+                    </ol>
+                    </div>
+                </td>
+                <td th:text="${l.remarks_dev}">Type</td>
+                <td th:text="${l.totalItems}">Items</td>
+                <td th:text="${l.totalCost}">Items</td>
+                <td style="width:15%">
+                    <a th:href="@{'/req-approval/approve/' + ${l.id}}" class="btn btn-primary " role="button" aria-pressed="true">Approve</a>
+                    <a th:href="@{'/req-approval/reject/' + ${l.id}}" class="btn btn-primary " role="button" aria-pressed="true">Reject</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit</title>
+    <style>
+    select {
+        width: 430px;
+        height:30px;
+        margin: 1px;
+    }
+    select:focus {
+        min-width: 150px;
+        width: 430px;
+        height:30px;
+    }
+    body, html {
+  height: 100%;
+  margin: 0;
+  background-image: url('/bg-image.jpg');
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+table,th, td {
+   border: 2px solid black;
+  }
+</style>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+
+<div class="container text-center">
+    <div>
+        <h1>Inventory Update</h1>
+    </div>
+    <div>
+        <form th:object="${inventory}" th:action="@{'/invt-maintenance/invt/edit/' + ${inventory.id}}"
+              method="post" style="max-width: 400px; margin: 0 auto;">
+            <div th:if="${message!=null}" class="alert alert-success text-center">
+                [[${message}]]
+            </div>
+            <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+                <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+            </div>
+            <div class="m-3">
+                <input type="hidden" th:field="*{id}"/>
+                <div class="form-group row">
+                    <label class="col-4 col-form-label">Name: </label>
+                    <input type="text" th:field="*{name}" class="form-control" th:errorclass="is-invalid"
+                           title="Must be alphanumeric"
+                           required />
+                </div>
+                <div class="form-group row">
+                    <label class="col-4 col-form-label">Type: </label>
+
+                    <div class="dropdown-toggle">
+                        <select th:field="*{type}" name="select type" th:errorclass="is-invalid">
+                            <div class="col-10">
+                                <option th:each="t : ${typeList}" th:text="${t}" th:value="${t}" class="form-contol" aria-labelledby="dLabel"></option>
+                            </div>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-4 col-form-label">Cost: </label>
+                    <div class="col-8">
+                        <input type="text" th:field="*{cost}" class="form-control" th:errorclass="is-invalid"
+                               required />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-4 col-form-label">Stock: </label>
+                    <div class="col-8">
+                        <input type="text" th:field="*{count}" class="form-control" th:errorclass="is-invalid"
+                               required />
+                    </div>
+                </div>
+
+                <div>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <a th:href="@{/invt-maintenance}" class="btn btn-primary " role="button" aria-pressed="true">Cancel</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

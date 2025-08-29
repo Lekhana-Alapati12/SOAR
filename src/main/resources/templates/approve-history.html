@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <style>
+body, html {
+  height: 100%;
+  margin: 0;
+  background-image: url('/bg-image.jpg');
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+table,th, td {
+   border: 2px solid black;
+  }
+  table.table-bordered{
+    border:2px solid #4682B4;;
+    margin-top:20px;
+  }
+table.table-bordered > thead > tr > th{
+    border:2px solid #4682B4;;
+}
+table.table-bordered > tbody > tr > td{
+    border:2px solid #4682B4;;
+}
+</style>
+    <meta charset="UTF-8">
+    <title>Inventory Approval Page</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+<div class="container text-center">
+    <div>
+        <h1>Request Approval History Page</h1>
+        <form th:action="@{/logout}" method="post">
+        <a th:href="@{/req-approval}"  class="btn btn-primary " role="button" aria-pressed="true">Back</a> &nbsp
+            <input type="submit" class="btn btn-primary" value="Logout">
+        </form>
+    </div>
+</div>
+<div class="container text-center">
+    <div>
+        <div th:if="${message!=null}" class="alert alert-success text-center">
+            [[${message}]]
+        </div>
+        <div>
+           <center><h2> DETAILS </h2></center>
+            <ul>
+                <li>
+                    <b>Total Number Of Requests Approved Till Date :</b>
+                    [[${approveCnt}]]
+                </li>
+                <li>
+                    <b>Total Cost Approved Till Date :</b>
+                    [[${approveCost}]]
+                    <!-- <td th:text="${list.inventory.type}">Type</td>-->
+                </li>
+                <li>
+                    <b>Total Number Of Requests Rejected Till Date :</b>
+                    [[${rejectCnt}]]
+                    <!-- <td th:text="${list.inventory.type}">Type</td>-->
+                </li>
+                <li>
+                    <b>Total Cost Rejected Till Date :</b>
+                    [[${rejectCost}]]
+                </li>
+            </ul>
+        </div>
+        <table class="table table-bordered" style="width:100%">
+            <thead class="thead-dark">
+            <tr>
+                <th style="text-align: center">Date</th>
+                <th style="text-align: center">Developer Details</th>
+                <th style="text-align: center ">Items Requested</th>
+                <th style="text-align: center">Remarks Entered By Developer</th>
+                <th style="text-align: center">Total Items</th>
+                <th style="text-align: center">Total Cost</th>
+                <th style="text-align: center">Status</th>
+                <th style="text-align: center">Remarks Entered By Manager</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="l: ${list}">
+                <td th:text="${l.date}">Type</td>
+                <td style="width:20%">
+
+                            <b>Id : </b>[[${l.user.id}]]
+                            <br>
+                            <b>Name : </b>[[${l.user.username}]]
+                            <!-- <td th:text="${list.inventory.type}">Type</td>-->
+
+                </td>
+                <td style="width:20%">
+                    <div style = "position:relative; right:20px">
+                    <ol>
+                        <li th:each="items: ${l.cardItems}" >
+
+                                    <b>Name :</b>
+                                    [[${items.inventory.name}]]
+                                    <br>
+                                    <b>Type :</b>
+                                    [[${items.inventory.type}]]
+                                    <!-- <td th:text="${list.inventory.type}">Type</td>-->
+                                    <br>
+                                    <b>Cost :</b>
+                                    [[${items.inventory.cost}]]
+                                    <br>
+                                    <!-- <td th:text="${list.inventory.type}">Type</td>-->
+                        </li>
+                    </ol>
+                    </div>
+                </td>
+                <td th:text="${l.remarks_dev}">Type</td>
+                <td th:text="${l.totalItems}">Items</td>
+                <td th:text="${l.totalCost}">ItemsCost</td>
+                <td th:text="${l.status}" style="width:8%">status</td>
+                <td th:text="${l.remarks_manager}">Remarks_Manager</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

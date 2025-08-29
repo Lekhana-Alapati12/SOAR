@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Request Inventory</title>
+    <style>
+    select {
+        width: 430px;
+        height:30px;
+        margin: 1px;
+    }
+    select:focus {
+        min-width: 150px;
+        width: 430px;
+        height:30px;
+    }
+   body, html {
+  height: 100%;
+  margin: 0;
+  background-image: url('/bg-image.jpg');
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+table,th, tr {
+   border: 1px solid black;
+  }
+
+    </style>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+
+<div class="container text-center">
+    <center><h1 th:text="${title}">H1Title</h1></center>
+</div>
+    <div style = "position:relative; right:300px">
+        <form th:action="@{${submit} + ${requestApprove.id}}" th:object="${requestApprove}"
+              method="post" style="max-width: 400px; margin: 0 auto;">
+            <div th:if="${message!=null}" class="alert alert-success text-center">
+                [[${message}]]
+            </div>
+            <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+                <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+            </div>
+            <div class="m-3">
+                <div>
+                    <b><h3>Developer Details :</h3></b>
+                        <div style = "position:relative; left:20px">
+                                <b>Employee Id :</b>
+                                <span th:text="*{user.id}"></span>
+                                <br>
+                                <b>Name : </b>
+                                <span th:text="*{user.username}"></span>
+                        </div>
+
+                </div>
+
+                <div>
+                    <b><h3>Items Requested :</h3></b>
+                    <ol>
+                        <li th:each="items: *{cardItems}">
+                                    <b>Name :</b> &nbsp
+                                    [[${items.inventory.name}]]
+                                    <br>
+                                    <b>Type :</b> &nbsp
+                                    [[${items.inventory.type}]]
+                                    <!-- <td th:text="${list.inventory.type}">Type</td>-->
+                                    <br>
+                                    <b>Cost :</b> &nbsp
+                                    [[${items.inventory.cost}]]
+                                    <br>
+                        </li>
+                    </ol>
+                </div>
+
+                    <b><p style="font-size:18px;">Date Of Request :
+                    <span th:text="*{date}"></span>
+                    </p></b>
+                    <b><p style="font-size:18px;">Remarks By Developer :
+                    <span th:text="*{remarks_dev}"></span>
+                        </p></b>
+                <b><p style="font-size:18px;">Total items Requested :
+                    <span th:text="*{totalItems}"></span>
+            </p></b>
+                    <b><p style="font-size:18px;">Total Cost :
+                    <span th:text="*{totalCost}"></span>
+                    </p></b>
+                <div class="form-group row" style = "position:relative; left:550px ; top:-250px">
+                    <label>Remarks:</label> &nbsp
+                        <input type="text" th:field="*{remarks_manager}" class="form-control"/>
+                                    </div>
+                <div class="form-group row" style = "position:relative; left:700px ; top:-250px">
+                    <button type="submit" class="btn btn-primary">Save</button> &nbsp
+                    <a th:href="@{${cancel}}" class="btn btn-primary " role="button" aria-pressed="true">Cancel</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+</body>
+</html>

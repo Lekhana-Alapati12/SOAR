@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <style>
+body, html {
+  height: 100%;
+  margin: 0;
+  background-image: url('/bg-image.jpg');
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+table,th, td {
+   border: 2px solid black;
+  }
+</style>
+    <meta charset="UTF-8">
+    <title>SOAR APPLICATION</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+
+    <div class="container text-center">
+        <div>
+        <h1>Welcome to SOAR Application</h1>
+        <h2>S.O.A.R. – Setup Office At Residence</h2>
+            <div th:if="${message!=null}" class="alert alert-success text-center">
+                [[${message}]]
+            </div>
+        </div>
+        <img src="setupOffice.jpg" height="300" width="250">
+        <br>
+    </div>
+    <br>
+    <div style="text-align: center;">
+        <a th:href="@{/register}" class="btn btn-primary" role="button" aria-pressed="true">Register</a> &nbsp  &nbsp
+        <a th:href="@{/login}" class="btn btn-primary" role="button" aria-pressed="true">Login</a>
+    </div>
+
+</body>
+</html>

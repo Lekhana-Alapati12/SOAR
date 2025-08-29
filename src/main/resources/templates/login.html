@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <style>
+body, html {
+  height: 100%;
+  margin: 0;
+  background-image: url('/bg-image.jpg');
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+table,th, td {
+   border: 2px solid black;
+  }
+</style>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+
+<div class="container text-center">
+    <div>
+        <h1>Login</h1>
+    </div>
+    <div>
+        <div th:if="${message!=null}" class="alert alert-success text-center">
+            [[${message}]]
+        </div>
+        <form th:action="@{/doLogin}"
+              method="post" style="max-width: 400px; margin: 0 auto;">
+       <!--     <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+                <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+            </div>-->
+            <div class="m-3">
+
+
+                <div class="form-group row">
+                    <label class="col-4 col-form-label">Email: </label>
+                    <div class="col-8">
+                        <input type="email"  class="form-control" name="emailId"
+                               required />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-4 col-form-label">Password: </label>
+                    <div class="col-8">
+                        <input type="password"  class="form-control"
+                               name="password"
+                               required />
+                    </div>
+                </div>
+
+                <div>
+                    <input type="submit" class="btn btn-primary" value="Login"/>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div>
+        <h5><a th:href="@{/password}">Forgot Password</a></h5>
+        <a th:href="@{/}" class="btn btn-primary " role="button" aria-pressed="true">Cancel</a>
+    </div>
+</div>
+
+</body>
+</html>
